@@ -1,0 +1,85 @@
+install.packages("knitr")
+install.packages("dplyr")
+install.packages("tidyr")
+install.packages("reshape2")
+install.packages("RColorBrewer")
+install.packages("GGally")
+install.packages("ggplot2")
+install.packages("caret")
+install.packages("glmnet")
+install.packages("reshape2")
+install.packages("boot")
+install.packages("verification")
+
+
+library(knitr)
+library(dplyr)
+library(tidyr)
+library(reshape2)
+library(RColorBrewer)
+library(GGally)
+library(ggplot2)
+library(caret)
+library(glmnet)
+library(boot)
+library(verification)
+
+url<-"http://archive.ics.uci.edu/ml/machine-learning-databases/credit-screening/crx.data"
+sadik<-read.table(url,header = T,sep = ",")
+str(sadik)
+##kategorik de??i??keni n??merik hale getirme
+sadik$X.<- factor(sadik$X.,
+                  levels = c('+','-'),
+                  labels = c(1,2))
+##veri ??zetleme ??rnekleri grafikler
+plot(sadik$X.)
+
+ggplot(sadik, aes(factor(X0.1), ..count..)) +
+  geom_bar(aes(fill = X.), position = "dodge") + xlab("Installment Rates")
+
+table(sadik$X.,sadik$b)
+boxplot(sadik$X30.83,sadik$X.)
+boxplot(sadik$g,sadik$X.)
+boxplot(sadik$X00202,sadik$X.)
+boxplot(sadik$X1.25,sadik$X.)
+
+ggplot(melt(data[,c(2,15)]), aes(x = variable, y = value, fill = X.)) + geom_boxplot() + xlab("X.") + ylab("X30.83")
+ggplot(melt(data[,c(2,15)]), aes(x = variable, y = value, fill = X.)) + geom_boxplot() + xlab("X.") + ylab("u")
+
+ggplot(data, aes(factor(X1.25), ..count..)) +
+  geom_bar(aes(fill = X.), position = "dodge") + xlab("Installment Rates")
+##kullan??lan baz?? paketler
+install.packages("neuralnet")
+library(neuralnet)
+install.packages("MASS")
+library(MASS)
+
+##veriyi test train diye ay??rma
+index<-sample(1:nrow(sadik), round(0.80*nrow(sadik)))
+sadik.test <- sadik[-index,]
+sadik.train<-sadik[index,]
+##lojistik regresyon modeli
+model<- glm(X. ~., family = binomial, sadik = sadik.train)
+
+
+
+summary(model)
+
+
+
+##lojistik model i??in bir y??ntem (geriye do??ru se??im)
+model2<- step(model, direction = "backward")
+summary(model2)
+
+##modelde anlaml?? olan de??i??kenler (y??ld??zl??lar)
+
+## en iyi model buymu?? y??ntemden gelen
+glm(formula = X. ~ b + X30.83 +  X0   + u + g + w + V + X1.25 + t +
+      t.1 + X01 + f + g.1 + X00202, family = binomial, sadik = sadik.train)
+
+
+credit.glm.final <- glm(X. ~ b + X30.83 +  X0   + u + g + w + V + X1.25 + t +
+                          t.1 + X01 + f + g.1 + X00202, family = binomial, sadik.train)
+
+
+

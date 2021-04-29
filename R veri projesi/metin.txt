@@ -1,0 +1,48 @@
+data<- read.table("http://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/german.data")##German datasındaki kategorik değişkenleri nümerik hale getirme
+
+head(data)
+
+
+data$V1<- factor(data$V1,
+                 levels = c('A11','A12','A13','A14'),
+                 labels = c(1,2,3,4))
+data$V3<- factor(data$V3,
+                 levels = c('A30','A31','A32','A33','A34'),
+                 labels = c('1','2','3','4','5'))
+data$V4<- factor(data$V4,
+                 levels = c('A40','A41','A42','A43','A44','A45','A46','A47','A48','A49','A410',),
+                 labels = c(1,2,3,4,5,6,7,8,9,10,11))
+data$V6<- factor(data$V6,
+                 levels = c('A61','A62','A63','A64','A65'),
+                 labels = c(1,2,3,4,5))          
+data$V7<- factor(data$V7,
+                 levels = c('A71','A72','A73','A74','A75'),
+                 labels = c(1,2,3,4,5))       
+data$V9<- factor(data$V9,
+                 levels = c('A91','A92','A93','A94','A95'),
+                 labels = c(1,2,3,4,5))
+data$V10<- factor(data$V10,
+                 levels = c('A101','A102','A103'),
+                 labels = c(1,2,3))
+data$V12<- factor(data$V12,
+                 levels = c('A121','A122','A123','A124'),
+                 labels = c(1,2,3,4))
+data$V14<- factor(data$V14,
+                 levels = c('A141','A142','A143'),
+                 labels = c(1,2,3))
+data$V15<- factor(data$V15,
+                 levels = c('A151','A152','A153'),
+                 labels = c(1,2,3))    
+data$V17<- factor(data$V17,
+                 levels = c('A171','A172','A173','A174'),
+                 labels = c(1,2,3,4))
+data$v19<- factor(data$v19,
+                  levels = c('A191','A192'),
+                  labels = c(1,2))
+data$V20<- factor(data$V20,
+                  levels = c('A201','A202'),
+                  labels = c(1,2))              
+data
+str(data)
+
+

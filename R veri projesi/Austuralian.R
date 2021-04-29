@@ -1,0 +1,36 @@
+url<-"http://archive.ics.uci.edu/ml/machine-learning-databases/credit-screening/crx.data"
+sadik<-read.table(url,header = T,sep = ",")
+str(sadik)
+##kategorik de??i??keni n??merik hale getirme
+data$V15 <- factor(data$V15,
+                  levels = c(1,2),
+                  labels = c(0,1))
+
+##veri ??zetleme ??rnekleri grafikler
+head(data)
+table(data$V15)
+summary(data$V10)
+plot(data$V15)
+
+table(data$v15,data$V15)
+boxplot(data$V2,data$V15)
+boxplot(data$V5,data$V15)
+boxplot(data$V13,data$V15)
+boxplot(data$V8,data$V15)
+
+ggplot(melt(data[,c(2,15)]), aes(x = variable, y = value, fill = V15)) + geom_boxplot() + xlab("V15") + ylab("V2")
+ggplot(melt(data[,c(2,15)]), aes(x = variable, y = value, fill = V15)) + geom_boxplot() + xlab("V15") + ylab("V4")
+
+ggplot(data, aes(factor(V8), ..count..)) +
+  geom_bar(aes(fill = V15), position = "dodge") + xlab("Installment Rates")
+
+
+##kullan??lan baz?? paketler
+
+library(neuralnet)
+library(MASS)
+
+##veriyi test train diye ay??rma
+index<-sample(1:nrow(data), round(0.80*nrow(data)))
+data.test <- data[-index,]
+data.train<-data[index,]
